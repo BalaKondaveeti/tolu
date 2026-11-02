@@ -1,4 +1,5 @@
 import { useState, type FormEvent } from 'react'
+import { HeartIcon } from '../components/Icons'
 import { Segmented } from '../components/Segmented'
 import { StatusNotice } from '../components/StatusNotice'
 import { AppError, classify, supabase } from '../lib/supabase'
@@ -41,7 +42,7 @@ export function SignIn() {
     <main className="auth">
       <div className="auth__brand">
         <span className="auth__logo" aria-hidden="true">
-          +1
+          <HeartIcon width={38} height={38} filled strokeWidth={0} />
         </span>
         <h1 className="auth__title">tolu</h1>
         <p className="auth__tagline">Your little set of tools, synced everywhere.</p>
