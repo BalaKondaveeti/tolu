@@ -9,13 +9,29 @@ import { AddQuotesSheet } from './QuoteSheets'
 const FAV_KEY = key('wakeup', 'favorites-only')
 const SWIPE = 50
 
-// Stable pseudo-random order: the same seed keeps the order steady while the
-// list refetches, and new quotes slot in without reshuffling everything.
+// Random order that stays put while the list refetches: each quote's place
+// comes from hashing its id with a seed picked when the screen opens. After
+// every quote has been shown once, the next round uses a fresh order.
 function hash(s: string): number {
   let h = 2166136261
   for (let i = 0; i < s.length; i++) h = Math.imul(h ^ s.charCodeAt(i), 16777619)
+  // Final mix so a small change in the seed reshuffles everything.
+  h ^= h >>> 16
+  h = Math.imul(h, 0x85ebca6b)
+  h ^= h >>> 13
+  h = Math.imul(h, 0xc2b2ae35)
+  h ^= h >>> 16
   return h >>> 0
 }
+
+function shuffled<T extends { id: string }>(items: T[], seed: string): T[] {
+  return items
+    .map((x) => [hash(`${seed}:${x.id}`), x] as const)
+    .sort((a, b) => a[0] - b[0])
+    .map(([, x]) => x)
+}
+
+const mod = (n: number, m: number) => ((n % m) + m) % m
 
 function readFavOnly(): boolean {
   try {
@@ -34,14 +50,22 @@ export function WakeUp() {
   const [error, setError] = useState<string | null>(null)
 
   const all = q.data
-  const list = useMemo(() => {
-    const pool = (all ?? []).filter((x) => !favOnly || x.favorite)
-    return pool.map((x) => [hash(seed + x.id), x] as const).sort((a, b) => a[0] - b[0]).map(([, x]) => x)
-  }, [all, favOnly, seed])
+  const pool = useMemo(() => (all ?? []).filter((x) => !favOnly || x.favorite), [all, favOnly])
+  const count = pool.length
+  const round = count ? Math.floor(index / count) : 0
 
-  const count = list.length
-  const current: Quote | undefined = count ? list[((index % count) + count) % count] : undefined
-  const position = count ? (((index % count) + count) % count) + 1 : 0
+  const list = useMemo(() => {
+    const order = shuffled(pool, `${seed}:${round}`)
+    // Don't show the last quote of one round again as the first of the next.
+    if (round !== 0 && order.length > 1) {
+      const before = shuffled(pool, `${seed}:${round - 1}`)
+      if (order[0].id === before[before.length - 1].id) [order[0], order[1]] = [order[1], order[0]]
+    }
+    return order
+  }, [pool, seed, round])
+
+  const current: Quote | undefined = count ? list[mod(index, count)] : undefined
+  const position = count ? mod(index, count) + 1 : 0
 
   const bg = useBackgrounds(index)
 

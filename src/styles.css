@@ -1183,6 +1183,8 @@ a.tool:active {
   overflow: hidden;
   display: flex;
   flex-direction: column;
+  /* Keep the controls clear of the tab bar whether or not a photo credit shows. */
+  padding-bottom: calc(var(--tabbar-height) + env(safe-area-inset-bottom) + var(--space-2));
   background: var(--wake-fallback);
   color: var(--wake-ink);
 }
@@ -1439,7 +1441,6 @@ a.tool:active {
   position: relative;
   z-index: 2;
   align-self: center;
-  margin-bottom: calc(var(--tabbar-height) + env(safe-area-inset-bottom) + var(--space-2));
   padding: var(--space-1) var(--space-2);
   color: var(--wake-ink-faint);
   font-size: var(--text-xs);
