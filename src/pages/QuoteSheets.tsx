@@ -52,7 +52,7 @@ function AddQuotesForm({ startMany, onDone }: { startMany: boolean; onDone: () =
           rows={mode === 'many' ? 9 : 4}
           value={text}
           onChange={(e) => setText(e.target.value)}
-          placeholder={mode === 'many' ? 'One quote per line. Numbers like "1." are removed.' : 'Do the painful thing'}
+          placeholder={mode === 'many' ? 'One quote per line. Numbers like "1." are removed.' : 'A line that gets you moving'}
           autoFocus
         />
       </div>
