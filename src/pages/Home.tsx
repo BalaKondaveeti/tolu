@@ -4,6 +4,7 @@ import { RefreshPill } from '../components/RefreshPill'
 import { StatusNotice } from '../components/StatusNotice'
 import { bump, usePending } from '../data/useBump'
 import { useCounters } from '../data/useCounters'
+import { useQuotes } from '../data/quotes'
 import { navigate } from '../lib/useHashRoute'
 import { colorVar, TOOLS } from '../tools'
 
@@ -12,9 +13,12 @@ export function Home() {
   const pending = usePending()
   const latest = q.data?.[0]
   const count = q.data?.length ?? 0
+  const quotes = useQuotes()
+  const quoteCount = quotes.data?.length ?? 0
 
   const subtitle = (id: string) => {
     if (id === 'counter') return q.data ? `${count} ${count === 1 ? 'counter' : 'counters'}` : ''
+    if (id === 'wakeup') return quotes.data ? `${quoteCount} ${quoteCount === 1 ? 'quote' : 'quotes'}` : ''
     return ''
   }
 

@@ -1,5 +1,6 @@
 import { invalidate, mutate } from '../lib/cache'
-import { supabase } from '../lib/supabase'
+import { fetchAll } from '../lib/fetchAll'
+import { fail, supabase } from '../lib/supabase'
 
 export interface Counter {
   id: string
@@ -14,27 +15,10 @@ export interface Counter {
 export const COUNTERS_KEY = 'counters'
 const TABLE = 'tolu_counters'
 const COLUMNS = 'id,name,value,note,color,created_at,updated_at'
-const PAGE = 1000
-
-// PostgREST caps responses at 1000 rows, so page until a short page comes back.
-export async function fetchCounters(): Promise<Counter[]> {
-  const rows: Counter[] = []
-  for (let from = 0; ; from += PAGE) {
-    const { data, error, status } = await supabase
-      .from(TABLE)
-      .select(COLUMNS)
-      .order('updated_at', { ascending: false })
-      .order('id')
-      .range(from, from + PAGE - 1)
-    if (error) throw Object.assign(new Error(error.message), { status })
-    rows.push(...(data as Counter[]))
-    if (!data || data.length < PAGE) break
-  }
-  return rows
-}
-
-function fail(error: { message: string } | null): asserts error is null {
-  if (error) throw new Error(error.message)
+export function fetchCounters(): Promise<Counter[]> {
+  return fetchAll<Counter>((from, to) =>
+    supabase.from(TABLE).select(COLUMNS).order('updated_at', { ascending: false }).order('id').range(from, to),
+  )
 }
 
 export async function createCounter(input: { name: string; value: number; color: number; note?: string }) {

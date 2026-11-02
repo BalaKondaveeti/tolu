@@ -96,6 +96,31 @@ export const ResetIcon = (p: P) => (
   </svg>
 )
 
+export const SunriseIcon = (p: P) => (
+  <svg {...base} {...p}>
+    <path d="M17 18a5 5 0 0 0-10 0" />
+    <path d="M12 2v7M4.2 10.2l1.4 1.4M1 18h2M21 18h2M18.4 11.6l1.4-1.4M23 22H1M8 6l4-4 4 4" />
+  </svg>
+)
+
+export const HeartIcon = ({ filled, ...p }: P & { filled?: boolean }) => (
+  <svg {...base} {...p} fill={filled ? 'currentColor' : 'none'}>
+    <path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1-1.1a5.5 5.5 0 0 0-7.8 7.8l1 1.1L12 21l7.8-7.5 1-1.1a5.5 5.5 0 0 0 0-7.8z" />
+  </svg>
+)
+
+export const ListIcon = (p: P) => (
+  <svg {...base} {...p}>
+    <path d="M9 6h11M9 12h11M9 18h11M4 6h.01M4 12h.01M4 18h.01" />
+  </svg>
+)
+
+export const ShuffleIcon = (p: P) => (
+  <svg {...base} {...p}>
+    <path d="M16 3h5v5M4 20 21 3M21 16v5h-5M15 15l6 6M4 4l5 5" />
+  </svg>
+)
+
 export const SparkIcon = (p: P) => (
   <svg {...base} {...p}>
     <path d="M12 3v4M12 17v4M3 12h4M17 12h4M6 6l2.5 2.5M15.5 15.5 18 18M6 18l2.5-2.5M15.5 8.5 18 6" />

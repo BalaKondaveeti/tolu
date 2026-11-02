@@ -22,6 +22,10 @@ export class AppError extends Error {
   }
 }
 
+export function fail(error: { message: string } | null): asserts error is null {
+  if (error) throw new Error(error.message)
+}
+
 const NETWORK_HINTS = ['failed to fetch', 'networkerror', 'load failed', 'network request failed', 'fetch failed']
 
 // Turns whatever supabase-js handed back into one of three cases the UI knows

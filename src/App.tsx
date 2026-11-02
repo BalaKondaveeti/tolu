@@ -6,8 +6,10 @@ import { useHashRoute } from './lib/useHashRoute'
 import { CounterDetail } from './pages/CounterDetail'
 import { CountersPage } from './pages/CountersPage'
 import { Home } from './pages/Home'
+import { QuotesPage } from './pages/QuotesPage'
 import { Settings } from './pages/Settings'
 import { SignIn } from './pages/SignIn'
+import { WakeUp } from './pages/WakeUp'
 
 export default function App() {
   const { session, ready } = useSession()
@@ -20,12 +22,20 @@ export default function App() {
 
   let page
   let tab = 'home'
+  let immersive = false
   if (section === 'counter' && param) {
     page = <CounterDetail id={param} />
     tab = 'counter'
   } else if (section === 'counter') {
     page = <CountersPage />
     tab = 'counter'
+  } else if (section === 'wakeup' && param === 'quotes') {
+    page = <QuotesPage />
+    tab = 'wakeup'
+  } else if (section === 'wakeup') {
+    page = <WakeUp />
+    tab = 'wakeup'
+    immersive = true
   } else if (section === 'settings') {
     page = <Settings session={session} />
     tab = 'settings'
@@ -37,7 +47,7 @@ export default function App() {
   return (
     <div className="app" key={session.user.id}>
       {page}
-      <TabBar active={tab} />
+      <TabBar active={tab} dark={immersive} />
     </div>
   )
 }

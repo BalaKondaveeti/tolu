@@ -1,5 +1,5 @@
 import type { ComponentType, SVGProps } from 'react'
-import { CounterIcon } from './components/Icons'
+import { CounterIcon, SunriseIcon } from './components/Icons'
 
 export interface Tool {
   id: string
@@ -19,6 +19,14 @@ export const TOOLS: Tool[] = [
     href: '#/counter',
     color: 0,
     Icon: CounterIcon,
+  },
+  {
+    id: 'wakeup',
+    name: 'Wake up',
+    blurb: 'Your motivational lines on big photos',
+    href: '#/wakeup',
+    color: 1,
+    Icon: SunriseIcon,
   },
 ]
 
