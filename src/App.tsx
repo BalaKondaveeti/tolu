@@ -22,7 +22,6 @@ export default function App() {
 
   let page
   let tab = 'home'
-  let immersive = false
   if (section === 'counter' && param) {
     page = <CounterDetail id={param} />
     tab = 'counter'
@@ -35,7 +34,6 @@ export default function App() {
   } else if (section === 'wakeup') {
     page = <WakeUp />
     tab = 'wakeup'
-    immersive = true
   } else if (section === 'settings') {
     page = <Settings session={session} />
     tab = 'settings'
@@ -45,9 +43,9 @@ export default function App() {
 
   // Keyed by user so nothing from a previous account lingers in component state.
   return (
-    <div className="app" key={session.user.id}>
+    <div className={`app${tab === 'home' ? ' app--tabbar' : ''}`} key={session.user.id}>
       {page}
-      <TabBar active={tab} dark={immersive} />
+      {tab === 'home' && <TabBar active={tab} />}
     </div>
   )
 }

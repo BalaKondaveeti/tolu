@@ -14,7 +14,7 @@ export function Settings({ session }: { session: Session }) {
 
   return (
     <>
-      <Header title="Settings" />
+      <Header title="Settings" back={{ label: 'Tools', href: '#/' }} />
       <main className="page">
         <p className="section-label">Account</p>
         <div className="group">

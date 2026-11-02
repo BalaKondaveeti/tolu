@@ -15,9 +15,9 @@ const TABS: Tab[] = [
   { id: 'settings', label: 'Settings', href: '#/settings', Icon: GearIcon },
 ]
 
-export function TabBar({ active, dark = false }: { active: string; dark?: boolean }) {
+export function TabBar({ active }: { active: string }) {
   return (
-    <nav className={`tabbar${dark ? ' tabbar--dark' : ''}`} aria-label="Main">
+    <nav className="tabbar" aria-label="Main">
       {TABS.map(({ id, label, href, Icon }) => (
         <a key={id} href={href} className={`tabbar__item${active === id ? ' is-active' : ''}`} aria-current={active === id ? 'page' : undefined}>
           <Icon width={26} height={26} strokeWidth={active === id ? 2.3 : 1.8} />

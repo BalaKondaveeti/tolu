@@ -55,7 +55,13 @@ p {
 }
 
 .app {
+  /* Space reserved at the bottom: the tab bar on Home, just the safe area elsewhere. */
+  --bottom-chrome: env(safe-area-inset-bottom);
   min-height: 100dvh;
+}
+
+.app--tabbar {
+  --bottom-chrome: calc(var(--tabbar-height) + env(safe-area-inset-bottom));
 }
 
 .splash {
@@ -169,7 +175,7 @@ p {
   max-width: var(--content-max);
   margin: 0 auto;
   padding: var(--space-3) calc(var(--gutter) + env(safe-area-inset-right))
-    calc(var(--tabbar-height) + env(safe-area-inset-bottom) + 96px) calc(var(--gutter) + env(safe-area-inset-left));
+    calc(var(--bottom-chrome) + 96px) calc(var(--gutter) + env(safe-area-inset-left));
 }
 
 .section-label {
@@ -811,7 +817,7 @@ a.tool:active {
   position: fixed;
   z-index: 25;
   right: calc(var(--gutter) + env(safe-area-inset-right));
-  bottom: calc(var(--tabbar-height) + env(safe-area-inset-bottom) + var(--space-4));
+  bottom: calc(var(--bottom-chrome) + var(--space-4));
   display: grid;
   place-items: center;
   width: 58px;
@@ -1184,7 +1190,7 @@ a.tool:active {
   display: flex;
   flex-direction: column;
   /* Keep the controls clear of the tab bar whether or not a photo credit shows. */
-  padding-bottom: calc(var(--tabbar-height) + env(safe-area-inset-bottom) + var(--space-2));
+  padding-bottom: calc(var(--bottom-chrome) + var(--space-2));
   background: var(--wake-fallback);
   color: var(--wake-ink);
 }
@@ -1458,19 +1464,6 @@ a.tool:active {
 
 .wake .notice {
   cursor: default;
-}
-
-.tabbar--dark {
-  background: var(--wake-tabbar-bg);
-  border-top-color: var(--wake-tabbar-border);
-}
-
-.tabbar--dark .tabbar__item {
-  color: var(--wake-tab-inactive);
-}
-
-.tabbar--dark .tabbar__item.is-active {
-  color: var(--wake-tab-active);
 }
 
 /* Save as image */
