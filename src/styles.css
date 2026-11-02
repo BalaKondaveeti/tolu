@@ -1303,8 +1303,18 @@ a.tool:active {
   touch-action: pan-y;
 }
 
-.wake__quote {
+.wake__quote,
+.wake__empty {
   margin: 0;
+  padding: var(--space-5);
+  border: 1px solid var(--wake-glass-border);
+  border-radius: var(--radius-xl);
+  background: var(--wake-panel);
+  -webkit-backdrop-filter: var(--wake-panel-blur);
+  backdrop-filter: var(--wake-panel-blur);
+}
+
+.wake__quote {
   animation: quote-in 520ms var(--ease-out) both;
 }
 
@@ -1387,7 +1397,7 @@ a.tool:active {
   position: relative;
   z-index: 2;
   display: grid;
-  grid-template-columns: auto auto 1fr;
+  grid-template-columns: auto auto auto 1fr;
   gap: var(--space-3);
   width: 100%;
   max-width: var(--content-max);
@@ -1461,6 +1471,40 @@ a.tool:active {
 
 .tabbar--dark .tabbar__item.is-active {
   color: var(--wake-tab-active);
+}
+
+/* Save as image */
+
+.save-quote__frame {
+  display: flex;
+  justify-content: center;
+}
+
+.save-quote__img {
+  display: block;
+  width: auto;
+  max-width: 100%;
+  height: min(52dvh, 520px);
+  aspect-ratio: 9 / 16;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-hero);
+  object-fit: cover;
+  -webkit-touch-callout: default;
+}
+
+.save-quote__img--loading {
+  background: var(--wake-fallback);
+  animation: shimmer-fade 1.2s ease-in-out infinite alternate;
+}
+
+@keyframes shimmer-fade {
+  to {
+    opacity: 0.6;
+  }
+}
+
+.save-quote__tip {
+  text-align: center;
 }
 
 /* Quotes list */

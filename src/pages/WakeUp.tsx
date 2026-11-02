@@ -1,10 +1,11 @@
 import { useCallback, useEffect, useMemo, useRef, useState, type PointerEvent } from 'react'
-import { ChevronLeft, ChevronRight, HeartIcon, ListIcon } from '../components/Icons'
+import { ChevronLeft, ChevronRight, HeartIcon, ListIcon, SaveImageIcon } from '../components/Icons'
 import { StatusNotice } from '../components/StatusNotice'
 import { imageUrl, shuffledBackgrounds, type Background } from '../data/backgrounds'
 import { updateQuote, useQuotes, type Quote } from '../data/quotes'
 import { key } from '../lib/config'
 import { AddQuotesSheet } from './QuoteSheets'
+import { SaveQuoteSheet, type SaveTarget } from './SaveQuoteSheet'
 
 const FAV_KEY = key('wakeup', 'favorites-only')
 const SWIPE = 50
@@ -48,6 +49,7 @@ export function WakeUp() {
   const [index, setIndex] = useState(0)
   const [adding, setAdding] = useState(false)
   const [error, setError] = useState<string | null>(null)
+  const [saveTarget, setSaveTarget] = useState<SaveTarget | null>(null)
 
   const all = q.data
   const pool = useMemo(() => (all ?? []).filter((x) => !favOnly || x.favorite), [all, favOnly])
@@ -204,6 +206,14 @@ export function WakeUp() {
           >
             <HeartIcon width={26} height={26} filled={current.favorite} />
           </button>
+          <button
+            type="button"
+            className="wake__ctrl"
+            onClick={() => setSaveTarget({ quote: current, bg: bg.current })}
+            aria-label="Save as image"
+          >
+            <SaveImageIcon width={24} height={24} />
+          </button>
           <button type="button" className="wake__ctrl wake__ctrl--next" onClick={next} aria-label="Next quote">
             <span>Next</span>
             <ChevronRight width={22} height={22} />
@@ -223,6 +233,7 @@ export function WakeUp() {
       )}
 
       <AddQuotesSheet open={adding} onClose={() => setAdding(false)} startMany />
+      <SaveQuoteSheet target={saveTarget} onClose={() => setSaveTarget(null)} />
     </div>
   )
 }

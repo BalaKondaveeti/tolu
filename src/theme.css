@@ -124,6 +124,14 @@
   --wake-glass-strong: rgba(255, 255, 255, 0.24);
   --wake-glass-border: rgba(255, 255, 255, 0.22);
   --wake-heart: #ff6b7f;
+  --wake-panel: rgba(8, 8, 12, 0.42);
+  --wake-panel-blur: blur(14px) saturate(140%);
+  --wake-panel-export: rgba(8, 8, 12, 0.5);
+  --wake-export-shade-top: rgba(0, 0, 0, 0.45);
+  --wake-export-shade-bottom: rgba(0, 0, 0, 0.6);
+  --wake-export-fallback-a: #1b1f3a;
+  --wake-export-fallback-b: #7a2a4f;
+  --wake-export-fallback-c: #eb6834;
   --wake-shade: linear-gradient(180deg, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0.05) 26%, rgba(0, 0, 0, 0.15) 45%, rgba(0, 0, 0, 0.78) 100%);
   --wake-fallback: radial-gradient(120% 80% at 70% 100%, #eb6834 0%, #7a2a4f 38%, #1b1f3a 75%, #0b0d17 100%);
   --wake-text-shadow: 0 2px 24px rgba(0, 0, 0, 0.45), 0 1px 3px rgba(0, 0, 0, 0.35);
