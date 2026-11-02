@@ -22,3 +22,7 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# SQL is kept out of this repo
+supabase/
+*.sql

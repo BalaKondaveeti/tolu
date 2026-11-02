@@ -30,7 +30,7 @@ npm run build    # outputs dist/
 
 The app uses the shared project `yxwqmwvelpjwwlvrpvki`. Its URL and publishable key are built in as `DEFAULT_CONFIG` in `src/lib/config.ts`.
 
-1. Open the project's **SQL Editor**, paste all of `supabase/schema.sql`, and click **Run**. The script is safe to run again; it creates `tolu_counters` (with RLS) and the `tolu_counter_bump` function.
+1. Run the tolu SQL in the project's **SQL Editor**. It is intentionally not kept in this repo; each tool's SQL is shared privately when the tool is added. The tables are `tolu_counters` (plus the `tolu_counter_bump` function) and `tolu_wakeup_quotes`, all with Row Level Security.
 2. Open the app and use **Create account** on the sign-in screen (any existing login for this Supabase project also works).
 3. Then turn sign-ups off: **Authentication → Sign In / Providers → Allow new users to sign up → off**.
 
