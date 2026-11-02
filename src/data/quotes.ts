@@ -25,7 +25,7 @@ export function useQuotes() {
   return useQuery(QUOTES_KEY, fetchQuotes)
 }
 
-// "1. Eat the frog" / "2) Do it" / "- Do it" → the quote text alone.
+// "1. Some quote" / "2) Another" / "- Another" → just the quote text.
 export function parseQuotes(raw: string): string[] {
   return raw
     .split('\n')
