@@ -67,7 +67,6 @@ export function WakeUp() {
   }, [pool, seed, round])
 
   const current: Quote | undefined = count ? list[mod(index, count)] : undefined
-  const position = count ? mod(index, count) + 1 : 0
 
   const bg = useBackgrounds(index)
 
@@ -163,10 +162,6 @@ export function WakeUp() {
               {bg.current && <span>· {bg.current.theme}</span>}
             </p>
             <blockquote className={`wake__text${long ? ' wake__text--long' : ''}`}>{current.text}</blockquote>
-            <figcaption className="wake__count">
-              {position} of {count}
-              {favOnly ? ' favorites' : ''}
-            </figcaption>
           </figure>
         ) : q.data ? (
           <div className="wake__empty" onPointerDown={(e) => e.stopPropagation()} onPointerUp={(e) => e.stopPropagation()}>
