@@ -7,6 +7,7 @@ const W = 1080
 const H = 1920
 const PAD = 84 // outer margin
 const INNER = 64 // panel padding
+const SIGNATURE = 'Balu'
 
 function token(name: string): string {
   return getComputedStyle(document.documentElement).getPropertyValue(name).trim()
@@ -106,9 +107,7 @@ export async function renderQuoteImage(text: string, bg: Background | null): Pro
     if (lines.length * size * 1.18 <= 900) break
   }
   const lineHeight = Math.round(size * 1.18)
-  const eyebrowSize = 30
-  const eyebrowGap = 40
-  const panelH = INNER * 2 + eyebrowSize + eyebrowGap + lines.length * lineHeight
+  const panelH = INNER * 2 + lines.length * lineHeight
   const panelY = Math.min(H - 300 - panelH, Math.round((H - panelH) / 2 + 220))
   const panelX = PAD
 
@@ -121,29 +120,20 @@ export async function renderQuoteImage(text: string, bg: Background | null): Pro
   ctx.stroke()
 
   ctx.textBaseline = 'top'
-  ctx.fillStyle = token('--wake-ink-soft')
-  ctx.font = `700 ${eyebrowSize}px ${font}`
-  const eyebrow = 'WAKE UP'
-  let x = panelX + INNER
-  for (const ch of eyebrow) {
-    ctx.fillText(ch, x, panelY + INNER)
-    x += ctx.measureText(ch).width + 4
-  }
-
   ctx.fillStyle = ink
   ctx.font = `800 ${size}px ${font}`
   ctx.shadowColor = 'rgba(0,0,0,0.35)'
   ctx.shadowBlur = 12
   lines.forEach((line, i) => {
-    ctx.fillText(line, panelX + INNER, panelY + INNER + eyebrowSize + eyebrowGap + i * lineHeight)
+    ctx.fillText(line, panelX + INNER, panelY + INNER + i * lineHeight)
   })
   ctx.shadowBlur = 0
 
-  // Footer: app mark and photo credit.
+  // Footer: signature and photo credit.
   ctx.font = `600 30px ${font}`
   ctx.fillStyle = token('--wake-ink-faint')
   ctx.textAlign = 'center'
-  const footer = usedPhoto && bg ? `tolu  ·  Photo: ${bg.credit} / Unsplash` : 'tolu'
+  const footer = usedPhoto && bg ? `${SIGNATURE}  ·  Photo: ${bg.credit} / Unsplash` : SIGNATURE
   ctx.fillText(footer, W / 2, H - 150)
 
   const blob = await new Promise<Blob | null>((resolve) => canvas.toBlob(resolve, 'image/jpeg', 0.9))
