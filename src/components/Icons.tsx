@@ -121,6 +121,14 @@ export const ShuffleIcon = (p: P) => (
   </svg>
 )
 
+export const PhotoIcon = (p: P) => (
+  <svg {...base} {...p}>
+    <rect x="3" y="4" width="18" height="16" rx="3" />
+    <circle cx="9" cy="9.5" r="1.6" />
+    <path d="m21 15.5-4.6-4.6a1 1 0 0 0-1.4 0L6.5 19.5" />
+  </svg>
+)
+
 export const SaveImageIcon = (p: P) => (
   <svg {...base} {...p}>
     <path d="M12 3v11M7.5 9.5 12 14l4.5-4.5" />

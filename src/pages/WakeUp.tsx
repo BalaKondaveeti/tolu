@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef, useState, type PointerEvent } from 'react'
-import { ChevronLeft, ChevronRight, HeartIcon, ListIcon, SaveImageIcon } from '../components/Icons'
+import { ChevronLeft, ChevronRight, HeartIcon, ListIcon, PhotoIcon, SaveImageIcon } from '../components/Icons'
 import { StatusNotice } from '../components/StatusNotice'
 import { imageUrl, shuffledBackgrounds, type Background } from '../data/backgrounds'
 import { updateQuote, useQuotes, type Quote } from '../data/quotes'
@@ -68,10 +68,14 @@ export function WakeUp() {
 
   const current: Quote | undefined = count ? list[mod(index, count)] : undefined
 
-  const bg = useBackgrounds(index)
+  // Photos follow the quote; "New photo" shifts to the next photo without
+  // changing the quote, and later quotes carry on from there.
+  const [photoShift, setPhotoShift] = useState(0)
+  const bg = useBackgrounds(index + photoShift)
 
   const next = useCallback(() => setIndex((i) => i + 1), [])
   const prev = useCallback(() => setIndex((i) => i - 1), [])
+  const newPhoto = useCallback(() => setPhotoShift((n) => n + 1), [])
 
   const toggleFavorite = useCallback(async () => {
     if (!current) return
@@ -101,10 +105,11 @@ export function WakeUp() {
         next()
       } else if (e.key === 'ArrowLeft') prev()
       else if (e.key === 'f') void toggleFavorite()
+      else if (e.key === 'p') newPhoto()
     }
     window.addEventListener('keydown', onKey)
     return () => window.removeEventListener('keydown', onKey)
-  }, [next, prev, toggleFavorite])
+  }, [next, prev, toggleFavorite, newPhoto])
 
   // Tap to advance; swipe left/right to move between quotes.
   const start = useRef<{ x: number; y: number } | null>(null)
@@ -200,6 +205,9 @@ export function WakeUp() {
             aria-label={current.favorite ? 'Remove from favorites' : 'Add to favorites'}
           >
             <HeartIcon width={26} height={26} filled={current.favorite} />
+          </button>
+          <button type="button" className="wake__ctrl" onClick={newPhoto} aria-label="New photo">
+            <PhotoIcon width={24} height={24} />
           </button>
           <button
             type="button"
